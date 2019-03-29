@@ -1,0 +1,6 @@
+# Racket-generated files
+compiled/
+doc/
+
+# Editor-generated files
+*~
