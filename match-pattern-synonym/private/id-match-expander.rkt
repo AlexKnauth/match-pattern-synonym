@@ -53,14 +53,18 @@
   (let loop ([stx stx])
     (syntax-parse stx
       [m:id
-       #:do [(define value (syntax-local-value #'m (λ () #f) ctx))]
+       #:do [(define value (syntax-local-value #'m (λ () #f) ctx))
+             (syntax-parse-state-cons! 'literals #'m)]
        #:fail-when (and (not (id-match-expander? value)) #'m)
        "expected id-match-expander"
        (loop
-        (local-apply-transformer (id-match-expander-transformer value)
-                                 stx
-                                 'expression
-                                 (ctx->list ctx)))]
+        (syntax-track-origin
+         (local-apply-transformer (id-match-expander-transformer value)
+                                  stx
+                                  'expression
+                                  (ctx->list ctx))
+         stx
+         #'m))]
       [_
        (stx-traverse/recur stx loop)])))
 

@@ -6,6 +6,10 @@
          match-lambda
          match-let match-let* match-letrec
          define/match
+         ~or
+         ~with
+         ~when
+         ~refine
          define-pattern
          <-)
 

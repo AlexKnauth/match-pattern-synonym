@@ -53,13 +53,12 @@
     pattern-synonym-transformer))
 
 (define-syntax-parser define-pattern
+  #:track-literals
   #:literals [<-]
 
   [(_ name:id
       {~optional {~and pat-only? <-}}
-      {~and exp:expr pat:pat})
-   #:fail-when (and (pair? (attribute pat.out)) (car (attribute pat.out)))
-   "unexpected free variable in pattern"
+      body:expr)
    #:attr name/p (generate-temporary #'name)
    #:attr name/v (and (not (attribute pat-only?)) (generate-temporary #'name))
    #'(begin
@@ -67,7 +66,10 @@
          (make-id-pattern-synonym-transformer #'name/p)
          (~? (make-var-like-transformer #'name/v)))
        (~? (define name/v exp))
-       (define name/p pat.matcher))]
+       (define name/p
+         (match-lambda
+           [body '()]
+           [_    #false])))]
 
   [(_ (name:id param:id ...)
       #:bind [bind:id ...]
