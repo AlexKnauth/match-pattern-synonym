@@ -65,7 +65,7 @@
        (define-id-match-expander name
          (make-id-pattern-synonym-transformer #'name/p)
          (~? (make-var-like-transformer #'name/v)))
-       (~? (define name/v exp))
+       (~? (define name/v body))
        (define name/p
          (match-lambda
            [body '()]
