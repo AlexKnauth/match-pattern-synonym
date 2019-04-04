@@ -6,8 +6,8 @@
   (require rackunit))
 
 
-(define-pattern Symbol (? symbol?))
-(define-pattern Number (? number?))
+(define-pattern Symbol <- (? symbol?))
+(define-pattern Number <- (? number?))
 
 (define-pattern (Listof/length e n) #:bind [n] <-
   (~or (and '() (~with n 0))
