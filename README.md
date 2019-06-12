@@ -7,12 +7,14 @@ Recursive pattern synonyms for `racket/match`.
 ```
 Provides `define-pattern`, a form for defining pattern synonyms.
 
+Pattern synonyms that are just patterns are defined with a `<-` back-arrow.
 ```racket
 (define-pattern name <- pattern)
 (define-pattern (name param-id ...) #:bind [param-id ...] <- pattern)
 ```
 Defines `name` as a pattern constructor equivalent to `pattern`.
 
+Pattern synonyms that are both patterns and expressions are defined without a back-arrow.
 ```racket
 (define-pattern name expr/pattern)
 (define-pattern (name param-id ...) #:bind [param-id ...] expr/pattern)
